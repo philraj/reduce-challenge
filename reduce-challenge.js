@@ -10,7 +10,7 @@ function compute (array) {
         lowest: Infinity
     };
     
-    return array.reduce( function( acc, val, index) {
+    return array.reduce( function( acc, val) {
         if (val > acc.highest) {
             acc.secondHighest = acc.highest;
             acc.highest = val;
