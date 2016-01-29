@@ -1,83 +1,73 @@
 //Write a function that takes an array and uses the reduce() method to return an object with the highest, lowest, second highest and second lowest numbers.
 
-var numbers = [1000, 1000, 800, 700, 600, 100, 100];
+var numbers = [5, 50, 500, 1000, 1500, 1500, 1000, 800, 700, 600, 300, 100, -100, 75, 250];
 
 function compute (array) {
-    var result = {}
+    var result = {
+        highest: -Infinity,
+        secondHighest: -Infinity,
+        secondLowest: Infinity,
+        lowest: Infinity
+    };
     
-    result.highest = array.reduce( function(prev, curr, i) {
-        if (curr > prev) {
-            result.highestIndex = i;
-            return curr;
+    return array.reduce( function( acc, val, index) {
+        if (val > acc.highest) {
+            acc.secondHighest = acc.highest;
+            acc.highest = val;
         }
-        else {
-            return prev;
+        else if (val > acc.secondHighest) {
+            acc.secondHighest = val;
         }
-    }, -Infinity);
-    
-    result.lowest = array.reduce( function(prev, curr, i) {
-        if (curr < prev) {
-            result.lowestIndex = i;
-            return curr;
+        
+        if (val < acc.lowest) {
+            acc.secondLowest = acc.lowest;
+            acc.lowest = val;
         }
-        else {
-            return prev;
+        else if (val < acc.secondLowest) {
+            acc.secondLowest = val;
         }
-    }, Infinity);
-    
-    result.secondHighest = array.reduce( function(prev, curr, i) {
-        if (i === result.highestIndex) return prev;
-        else return Math.max(prev, curr);
-    }, -Infinity);
-    
-    result.secondLowest = array.reduce( function(prev, curr, i) {
-        if (i === result.lowestIndex) return prev;
-        else return Math.min(prev, curr);
-    }, Infinity)
-    
-    delete result.highestIndex;
-    delete result.lowestIndex;
-    
-    return result;
+        
+        return acc;
+    }, result); 
 }
 
-// function compute (numbers) {
-//     var results = {};
+// function compute (array) {
+//     var result = {};
     
-//     results.highest = numbers.reduce( function(previous, current) {
-//         return Math.max(previous, current);
-//     });
-    
-//     // console.log("Highest -> " + results.highest)
-    
-//     results.lowest = numbers.reduce( function(previous, current) {
-//         return Math.min(previous, current);
-//     });
-    
-//     //console.log("Lowest -> " + results.lowest)
-    
-//     results.secondHighest = numbers.reduce( function(previous, current) {
-//         if (current === results.highest) {
-//             console.log(previous);
-//             return previous;
-//         }
-//         else if (previous === results.highest) {
-//             console.log(current);
-//             return current;
+//     result.highest = array.reduce( function(prev, curr, i) {
+//         if (curr > prev) {
+//             result.highestIndex = i;
+//             return curr;
 //         }
 //         else {
-//             console.log(Math.max(previous,current));
-//             return Math.max(previous, current);
+//             return prev;
 //         }
-//     });
+//     }, -Infinity);
     
-//     results.secondLowest = numbers.reduce( function(previous, current) {
-//         if (current === results.lowest) return previous;
-//         else if (previous === results.lowest) return current;
-//         else return Math.min(previous, current);
-//     })
+//     result.lowest = array.reduce( function(prev, curr, i) {
+//         if (curr < prev) {
+//             result.lowestIndex = i;
+//             return curr;
+//         }
+//         else {
+//             return prev;
+//         }
+//     }, Infinity);
     
-//     return results;
+//     result.secondHighest = array.reduce( function(prev, curr, i) {
+//         if (i === result.highestIndex) return prev;
+//         else return Math.max(prev, curr);
+//     }, -Infinity);
+    
+//     result.secondLowest = array.reduce( function(prev, curr, i) {
+//         if (i === result.lowestIndex) return prev;
+//         else return Math.min(prev, curr);
+//     }, Infinity);
+    
+//     delete result.highestIndex;
+//     delete result.lowestIndex;
+    
+//     return result;
 // }
 
 console.log(JSON.stringify( compute(numbers) ));
